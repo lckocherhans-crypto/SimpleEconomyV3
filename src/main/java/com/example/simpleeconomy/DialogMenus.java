@@ -170,8 +170,8 @@ public class DialogMenus {
                 .sorted(Comparator.comparingLong(Listing::expiresAt).reversed())
                 .toList();
         int pages = Math.max(1, (list.size() + PAGE_SIZE - 1) / PAGE_SIZE);
-        page = Math.max(0, Math.min(page, pages - 1));
-        int from = page * PAGE_SIZE;
+        final int pg = Math.max(0, Math.min(page, pages - 1));
+        int from = pg * PAGE_SIZE;
         int to = Math.min(list.size(), from + PAGE_SIZE);
 
         List<ActionButton> actions = new ArrayList<>();
@@ -183,8 +183,8 @@ public class DialogMenus {
             })));
         }
         final String q = query;
-        actions.add(dialogs.button(Component.text("< Prev"), null, 100, dialogs.click(pl -> openAh(pl, q, page - 1, mine))));
-        actions.add(dialogs.button(Component.text("Next >"), null, 100, dialogs.click(pl -> openAh(pl, q, page + 1, mine))));
+        actions.add(dialogs.button(Component.text("< Prev"), null, 100, dialogs.click(pl -> openAh(pl, q, pg - 1, mine))));
+        actions.add(dialogs.button(Component.text("Next >"), null, 100, dialogs.click(pl -> openAh(pl, q, pg + 1, mine))));
         actions.add(dialogs.button(Component.text(mine ? "Back to Auction House" : "Your listings"), null, 200,
                 dialogs.click(pl -> openAh(pl, null, 0, !mine))));
         actions.add(dialogs.button(Component.text("Search"), null, 140, dialogs.click(pl ->
@@ -196,7 +196,7 @@ public class DialogMenus {
         actions.add(dialogs.button(Component.text("Quick Sell"), null, 140, dialogs.click(this::openQuickSell)));
 
         List<Component> lines = List.of(Msg.c("&7" + (mine ? "Your listings" : "Browsing the auction house")
-                + (q != null && !q.isBlank() ? " - \"" + q + "\"" : "") + " - page " + (page + 1) + "/" + pages));
+                + (q != null && !q.isBlank() ? " - \"" + q + "\"" : "") + " - page " + (pg + 1) + "/" + pages));
         dialogs.menu(p, mine ? "Your Listings" : "Auction House", lines, List.of(), actions,
                 dialogs.button("Close", NamedTextColor.RED, null), 1);
     }
@@ -345,8 +345,8 @@ public class DialogMenus {
                 .sorted(Comparator.<Order>comparingDouble(o -> o.priceEach).reversed())
                 .toList();
         int pages = Math.max(1, (list.size() + PAGE_SIZE - 1) / PAGE_SIZE);
-        page = Math.max(0, Math.min(page, pages - 1));
-        int from = page * PAGE_SIZE;
+        final int pg = Math.max(0, Math.min(page, pages - 1));
+        int from = pg * PAGE_SIZE;
         int to = Math.min(list.size(), from + PAGE_SIZE);
 
         List<ActionButton> actions = new ArrayList<>();
@@ -360,8 +360,8 @@ public class DialogMenus {
             })));
         }
         final String q = query;
-        actions.add(dialogs.button(Component.text("< Prev"), null, 100, dialogs.click(pl -> openOrders(pl, q, page - 1, mine))));
-        actions.add(dialogs.button(Component.text("Next >"), null, 100, dialogs.click(pl -> openOrders(pl, q, page + 1, mine))));
+        actions.add(dialogs.button(Component.text("< Prev"), null, 100, dialogs.click(pl -> openOrders(pl, q, pg - 1, mine))));
+        actions.add(dialogs.button(Component.text("Next >"), null, 100, dialogs.click(pl -> openOrders(pl, q, pg + 1, mine))));
         actions.add(dialogs.button(Component.text(mine ? "Back to all orders" : "Your orders"), null, 200,
                 dialogs.click(pl -> openOrders(pl, null, 0, !mine))));
         actions.add(dialogs.button(Component.text("Search"), null, 140, dialogs.click(pl ->
@@ -369,7 +369,7 @@ public class DialogMenus {
         actions.add(dialogs.button(Component.text("Create an order"), null, 200, dialogs.click(pl -> openMaterialPicker(pl, "", 0))));
 
         List<Component> lines = List.of(Msg.c("&7" + (mine ? "Your orders" : "Browsing buy orders")
-                + (q != null && !q.isBlank() ? " - \"" + q + "\"" : "") + " - page " + (page + 1) + "/" + pages));
+                + (q != null && !q.isBlank() ? " - \"" + q + "\"" : "") + " - page " + (pg + 1) + "/" + pages));
         dialogs.menu(p, mine ? "Your Orders" : "Orders", lines, List.of(), actions,
                 dialogs.button("Close", NamedTextColor.RED, null), 1);
     }
