@@ -178,8 +178,9 @@ public class DialogMenus {
         for (int i = from; i < to; i++) {
             Listing l = list.get(i);
             Component label = itemLabel(l.item()).append(Component.text(" - " + MoneyUtil.format(l.price())));
-            actions.add(dialogs.button(label, null, 220, dialogs.click(pl ->
-                    mine ? cancelListing(pl, l) : maybeConfirmBuy(pl, l))));
+            actions.add(dialogs.button(label, null, 220, dialogs.click(pl -> {
+                if (mine) cancelListing(pl, l); else maybeConfirmBuy(pl, l);
+            })));
         }
         final String q = query;
         actions.add(dialogs.button(Component.text("< Prev"), null, 100, dialogs.click(pl -> openAh(pl, q, page - 1, mine))));
@@ -354,8 +355,9 @@ public class DialogMenus {
             Component label = Component.translatable(o.material.translationKey())
                     .append(Component.text(" - " + MoneyUtil.format(o.priceEach) + " each"
                             + (mine ? " (" + o.filled + "/" + o.total + ", " + o.pending + " to collect)" : "")));
-            actions.add(dialogs.button(label, null, 260, dialogs.click(pl ->
-                    mine ? openOrderManage(pl, o) : fillOrder(pl, o))));
+            actions.add(dialogs.button(label, null, 260, dialogs.click(pl -> {
+                if (mine) openOrderManage(pl, o); else fillOrder(pl, o);
+            })));
         }
         final String q = query;
         actions.add(dialogs.button(Component.text("< Prev"), null, 100, dialogs.click(pl -> openOrders(pl, q, page - 1, mine))));
